@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,8 +22,8 @@ namespace Ev1_Interfaces
     /// </summary>
     public partial class MainWindow : Window
     {
-
-        private float op1 = 0;
+        //Parametros encargados de almacenar el primer y segundo operando y el tipo de operacion respectivamente
+        private float op1;
         private float op2;
         private String op = null;
         public MainWindow()
@@ -30,58 +31,94 @@ namespace Ev1_Interfaces
             InitializeComponent();
         }
 
+        //Metodo que se llama cuando se pulsa cualquier boton
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             Button b = (Button)sender;
 
+            //Si el boton es un numero, que este se escriba en la calculadora
             if (b.Content.ToString() == "1" || b.Content.ToString() == "2" || b.Content.ToString() == "3" ||
                 b.Content.ToString() == "4" || b.Content.ToString() == "5" || b.Content.ToString() == "6" ||
                 b.Content.ToString() == "7" || b.Content.ToString() == "8" || b.Content.ToString() == "9" ||
-                b.Content.ToString() == "0") {
-                if (tb.Text == "0")
+                b.Content.ToString() == "0" || b.Content.ToString() == ".")
+            {
+                //Si el texto esta "vacio" (0) que el numero se sobreescriba, si se ha indicado que el numero sea negativo, 
+                //se le añade un 0 delante, si no se suma a lo que haya escrito en la calculadora
+                if (tb.Text.Equals("0"))
                 {
                     tb.Text = b.Content.ToString();
-                } else
+                }
+                else if (tb.Text.Equals("-0"))
+                {
+                    tb.Text = "-" + b.Content.ToString();
+                }
+                else
                 {
                     tb.Text += b.Content.ToString();
                 }
-            } else if (b.Content.ToString() == "/" || b.Content.ToString() == "*" || b.Content.ToString() == "+" ||
-                b.Content.ToString() == "-") {
+                //Si el boton es una operacion, se llama al metodo Arit_click, menos si es un menos y la calculadora esta vacia,
+                //En cual caso se indicara que el siguiente numero que se escriba es negativo
+            }
+            else if (b.Content.ToString() == "/" || b.Content.ToString() == "*" || b.Content.ToString() == "+")
+            {
                 Arit_Click(b.Content.ToString());
-            } else if (b.Content.ToString() == ".") {
-                Dot_Click();
+            }
+            else if (b.Content.ToString() == "-")
+            {
+                if (tb.Text.Equals("0"))
+                {
+                    tb.Text = "-0";
+                }
+                else
+                {
+                    Arit_Click(b.Content.ToString());
+                }
             }
         }
 
+        //Metodo encargado de manejar el boton igual
         private void Equals_Click(object sender, RoutedEventArgs e)
         {
+            //Si la operacion no es nula, se evalua que operacion se ha escogido, si no el boton es inservible
             if(op != null) {
+                // se crea un placeholder para la operacion y se almacena que numero es el segundo operando
                 float ph;
                 op2 = float.Parse(tb.Text, CultureInfo.InvariantCulture.NumberFormat);
+                //Se evalua la operacion con un switch
                 switch (op) {
                     case "/":
+                        // se cambia el texto de la calculadora al resultado de la operacion y el operando 1 se convierte en el resultado,
+                        // por si se quiere reoperar, las variables luego de esto se reinicializan, menos op1
                         tb.Text = (op1 / op2).ToString();
                         tb.Text = tb.Text.Replace(",", ".");
                         ph = op1 / op2;
                         op1 = ph;
+                        op = null;
+                        op2 = 0;
                         break;
                     case "*":
                         tb.Text = (op1 * op2).ToString();
                         tb.Text = tb.Text.Replace(",", ".");
                         ph = op1 * op2;
                         op1 = ph;
+                        op = null;
+                        op2 = 0;
                         break;
                     case "+":
                         tb.Text = (op1 + op2).ToString();
                         tb.Text = tb.Text.Replace(",", ".");
                         ph = op1 + op2;
                         op1 = ph;
+                        op = null;
+                        op2 = 0;
                         break;
                     case "-":
                         tb.Text = (op1 - op2).ToString();
                         tb.Text = tb.Text.Replace(",", ".");
                         ph = op1 - op2;
                         op1 = ph;
+                        op = null;
+                        op2 = 0;
                         break;
                     default:
                         return;
@@ -92,21 +129,29 @@ namespace Ev1_Interfaces
             }
         }
 
+        // Metodo que maneja el boton "Off"
         private void Off_Click_1(object sender, RoutedEventArgs e)
         {
+            //Esta linea cierra la aplicacion
             Application.Current.Shutdown();
         }
 
+        // Metodo que maneja el boton "Del"
         private void Del_Click(object sender, RoutedEventArgs e)
         {
+            //Vacia la calculadora y la devuelve a 0
             tb.Text = "0";
         }
 
+        // Metodo que maneja el boton "R"
         private void R_Click(object sender, RoutedEventArgs e)
         {
+            //Si la longitud del texto es menor o igual a cero no hace nada
             if (tb.Text.Length > 0)
             {
+                //Elimina el ultimo caracter escrito en la calculadora
                 tb.Text = tb.Text.Substring(0, tb.Text.Length - 1);
+                //Si la longitud es 0, el texto sera igual a "0"
                 if(tb.Text.Length == 0)
                 {
                     tb.Text = "0";
@@ -114,28 +159,24 @@ namespace Ev1_Interfaces
             }
         }
 
-        private void Dot_Click()
-        {
-            tb.Text += ".";
-        }
-
+        // Metodo que maneja los botones de operacion
         private void Arit_Click(String op)
         {
+            // pone la operacion del boton indicado y convierte el primer operando en el texto que habia en la calculadora 
+            // antes de pulsar el boton. Despues de esto reinicializa el texto de la calculadora
             this.op = op;
             op1 = float.Parse(tb.Text, CultureInfo.InvariantCulture.NumberFormat);
             tb.Text = "0";
         }
 
-        private void tb_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
+        // Metodo encargado de manejar los botones del menu
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             MenuItem mi = (MenuItem)sender;
+            // if encargado de identificar que boton se ha pulsado
             if (mi.Header.ToString().Equals("Negrita"))
             {
+                // Si el boton de negrita se checkea, normal se deja de chequear y cambia el formato a negrita
                 if (mi.IsChecked)
                 {
                     Normal.IsChecked = false;
@@ -159,7 +200,7 @@ namespace Ev1_Interfaces
                     Substract.FontWeight = FontWeights.Bold;
                     Equals.FontWeight = FontWeights.Bold;
                     Dot.FontWeight = FontWeights.Bold;
-                } else
+                } else //Si no esta checkeado, se quita la negrita, si cursiva tampoco esta checkeado, normal se checkea
                 {
                     if (!Italic.IsChecked)
                     {
@@ -186,6 +227,7 @@ namespace Ev1_Interfaces
                     Equals.FontWeight = FontWeights.Normal;
                     Dot.FontWeight = FontWeights.Normal;
                 }
+                // Con la cursiva la logica es exactamente la misma solo que se invierten los papeles de italic y bold
             } else if (mi.Header.ToString().Equals("Cursiva"))
             {
                 if (mi.IsChecked)
@@ -238,10 +280,11 @@ namespace Ev1_Interfaces
                     Equals.FontStyle = FontStyles.Normal;
                     Dot.FontStyle = FontStyles.Normal;
                 }
-            } else
+            } else // Si el que se ha pulsado es normal, negrita y cusriva se deschequean y se desformatean de los numeros
             {
                 Bold.IsChecked = false;
                 Italic.IsChecked = false;
+                Normal.IsChecked = true;
                 tb.FontWeight= FontWeights.Normal; tb.FontStyle= FontStyles.Normal;
                 One.FontWeight = FontWeights.Normal; One.FontStyle = FontStyles.Normal;
                 Two.FontWeight = FontWeights.Normal; Two.FontStyle = FontStyles.Normal;

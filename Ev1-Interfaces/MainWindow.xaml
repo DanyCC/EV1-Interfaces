@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ev1_Interfaces"
         mc:Ignorable="d"
-        Title="Calculadora WPF" Height="310" Width="240">
+        Title="Calculadora WPF Daniel Cosa" Height="310" Width="240">
+    <!-- Control template que se aplicara a los botones -->
     <Window.Resources>
         <ControlTemplate x:Key="genericButton" TargetType="Button">
             <Grid>
@@ -19,6 +20,7 @@
             <ColumnDefinition Width="11*"/>
             <ColumnDefinition Width="49*"/>
         </Grid.ColumnDefinitions>
+        <!-- Menu donde iran los botones para definir el formato del texto -->
         <Menu Margin="0,0,0,255" Grid.ColumnSpan="2" Background="LightBlue">
             <MenuItem Header="Formato">
                 <MenuItem.Foreground>
@@ -29,12 +31,16 @@
                 <MenuItem Header="Clasico" Name="Normal" IsCheckable="True" IsChecked="True" Background="LightBlue" Click="MenuItem_Click"/>
             </MenuItem>
         </Menu>
-        <Button Content="7"  Name="Seven"  Margin="11,115,45,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="46" Height="31" FontSize="18" BorderThickness="2,2,2,1" Click="Button_Click_1" Grid.ColumnSpan="2">
+        <!-- Botones, el diseño de todos los botones es igual, menos el de off, que es mas largo, lo que cambia es la referencia de cada boton al hacer click-->
+        <Button Content="7"  Name="Seven"  Margin="22,112,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                Width="46" Height="31" FontSize="18" BorderThickness="2,2,2,1" Click="Button_Click_1" Grid.ColumnSpan="2">
+            <!-- Resource encargado de redondear los botones -->
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="7"/>
                 </Style>
             </Button.Resources>
+            <!-- Resources encargados de asignar colores al texto, borde y relleno del boton respectivamente-->
             <Button.Foreground>
                 <SolidColorBrush Color="White"/>
             </Button.Foreground>
@@ -45,20 +51,25 @@
                 <SolidColorBrush Color="CornflowerBlue"/>
             </Button.Background>
         </Button>
-
-        <TextBox Height="38" TextWrapping="Wrap" VerticalAlignment="Top" Margin="9,20,0,0" HorizontalAlignment="Left" Width="201" FontSize="20" Background="CornflowerBlue" BorderThickness="2" BorderBrush="CornflowerBlue" Name="tb" Text="0" TextChanged="tb_TextChanged" Grid.ColumnSpan="2">
+        <!-- TextBox donde estaran los resultados y los cambios de la calculadora -->
+        <TextBox Height="38" TextWrapping="Wrap" VerticalAlignment="Top" Margin="10,26,0,0" HorizontalAlignment="Left" 
+                 Width="205" FontSize="20" Background="CornflowerBlue" BorderThickness="2" BorderBrush="CornflowerBlue" 
+                 Name="tb" Text="0" Grid.ColumnSpan="2">
+            <!-- Resource encargado de redondear la Textbox -->
             <TextBox.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="7"/>
                 </Style>
             </TextBox.Resources>
+            <!-- Resource encargado de asignar un color al texto de la TextBox-->
             <TextBox.Foreground>
                 <SolidColorBrush Color="White" />
             </TextBox.Foreground>
 
         </TextBox>
-
-        <Button Content="8" Name="Eight" HorizontalAlignment="Left" Margin="13,115,0,0" VerticalAlignment="Top" Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.Column="1">
+        <!-- Botones -->
+        <Button Content="8" Name="Eight" HorizontalAlignment="Left" Margin="27,112,0,0" VerticalAlignment="Top" 
+                Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.Column="1">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="7"/>
@@ -74,7 +85,8 @@
                 <SolidColorBrush Color="CornflowerBlue"/>
             </Button.Background>
         </Button>
-        <Button Content="9" Name="Nine" HorizontalAlignment="Left" Margin="59,115,0,0" VerticalAlignment="Top" Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.Column="1">
+        <Button Content="9" Name="Nine" HorizontalAlignment="Left" Margin="73,112,0,0" VerticalAlignment="Top" Width="46" Height="31"
+                FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.Column="1">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="7"/>
@@ -90,7 +102,8 @@
                 <SolidColorBrush Color="CornflowerBlue"/>
             </Button.Background>
         </Button>
-        <Button Content="/" Name="Divide" ToolTip="Dividir" HorizontalAlignment="Left" Margin="105,115,0,0" VerticalAlignment="Top" Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.Column="1">
+        <Button Content="/" Name="Divide" ToolTip="Dividir" HorizontalAlignment="Left" Margin="119,112,0,0" 
+                VerticalAlignment="Top" Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.Column="1">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="7"/>
@@ -106,7 +119,8 @@
                 <SolidColorBrush Color="CornflowerBlue"/>
             </Button.Background>
         </Button>
-        <Button Content="4" Name="Four" HorizontalAlignment="Left" Margin="11,151,0,0" VerticalAlignment="Top" Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.ColumnSpan="2">
+        <Button Content="4" Name="Four" HorizontalAlignment="Left" Margin="22,148,0,0" VerticalAlignment="Top" Width="46" 
+                Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.ColumnSpan="2">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="7"/>
@@ -122,7 +136,8 @@
                 <SolidColorBrush Color="CornflowerBlue"/>
             </Button.Background>
         </Button>
-        <Button Content="5" Name="Five" HorizontalAlignment="Left" Margin="13,151,0,0" VerticalAlignment="Top" Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.Column="1">
+        <Button Content="5" Name="Five" HorizontalAlignment="Left" Margin="27,148,0,0" VerticalAlignment="Top" Width="46" 
+                Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.Column="1">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="7"/>
@@ -138,7 +153,8 @@
                 <SolidColorBrush Color="CornflowerBlue"/>
             </Button.Background>
         </Button>
-        <Button Content="6" Name="Six" HorizontalAlignment="Left" Margin="59,151,0,0" VerticalAlignment="Top" Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.Column="1">
+        <Button Content="6" Name="Six" HorizontalAlignment="Left" Margin="73,148,0,0" VerticalAlignment="Top" 
+                Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.Column="1">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="7"/>
@@ -154,7 +170,8 @@
                 <SolidColorBrush Color="CornflowerBlue"/>
             </Button.Background>
         </Button>
-        <Button Content="*" Name="Multiply" ToolTip="Multiplicar" HorizontalAlignment="Left" Margin="105,151,0,0" VerticalAlignment="Top" Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.Column="1">
+        <Button Content="*" Name="Multiply" ToolTip="Multiplicar" HorizontalAlignment="Left" Margin="119,148,0,0" 
+                VerticalAlignment="Top" Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.Column="1">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="7"/>
@@ -170,7 +187,8 @@
                 <SolidColorBrush Color="CornflowerBlue"/>
             </Button.Background>
         </Button>
-        <Button Content="1" Name="One" HorizontalAlignment="Left" Margin="11,187,0,0" VerticalAlignment="Top" Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.ColumnSpan="2">
+        <Button Content="1" Name="One" HorizontalAlignment="Left" Margin="22,184,0,0" VerticalAlignment="Top" Width="46" Height="31" 
+                FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.ColumnSpan="2">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="7"/>
@@ -186,7 +204,8 @@
                 <SolidColorBrush Color="CornflowerBlue"/>
             </Button.Background>
         </Button>
-        <Button Content="2" Name="Two" HorizontalAlignment="Left" Margin="13,187,0,0" VerticalAlignment="Top" Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.Column="1">
+        <Button Content="2" Name="Two" HorizontalAlignment="Left" Margin="27,184,0,0" VerticalAlignment="Top" 
+                Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.Column="1">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="7"/>
@@ -202,7 +221,8 @@
                 <SolidColorBrush Color="CornflowerBlue"/>
             </Button.Background>
         </Button>
-        <Button Content="3" Name="Three" HorizontalAlignment="Left" Margin="59,187,0,0" VerticalAlignment="Top" Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.Column="1">
+        <Button Content="3" Name="Three" HorizontalAlignment="Left" Margin="73,184,0,0" VerticalAlignment="Top" 
+                Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.Column="1">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="7"/>
@@ -218,7 +238,8 @@
                 <SolidColorBrush Color="CornflowerBlue"/>
             </Button.Background>
         </Button>
-        <Button Content="-" Name="Substract" ToolTip="Restar" HorizontalAlignment="Left" Margin="105,187,0,0" VerticalAlignment="Top" Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.Column="1">
+        <Button Content="-" Name="Substract" ToolTip="Restar" HorizontalAlignment="Left" Margin="119,184,0,0" 
+                VerticalAlignment="Top" Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.Column="1">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="7"/>
@@ -234,7 +255,8 @@
                 <SolidColorBrush Color="CornflowerBlue"/>
             </Button.Background>
         </Button>
-        <Button Content="0" Name="Zero" HorizontalAlignment="Left" Margin="11,223,0,0" VerticalAlignment="Top" Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.ColumnSpan="2">
+        <Button Content="0" Name="Zero" HorizontalAlignment="Left" Margin="22,220,0,0" VerticalAlignment="Top" 
+                Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.ColumnSpan="2">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="7"/>
@@ -250,7 +272,8 @@
                 <SolidColorBrush Color="CornflowerBlue"/>
             </Button.Background>
         </Button>
-        <Button Content="=" Name="Equals" ToolTip="Igual" HorizontalAlignment="Left" Margin="59,223,0,0" VerticalAlignment="Top" Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Equals_Click" Grid.Column="1">
+        <Button Content="=" Name="Equals" ToolTip="Igual" HorizontalAlignment="Left" Margin="73,220,0,0" VerticalAlignment="Top" 
+                Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Equals_Click" Grid.Column="1">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="7"/>
@@ -266,7 +289,8 @@
                 <SolidColorBrush Color="CornflowerBlue"/>
             </Button.Background>
         </Button>
-        <Button Content="+" Name="Add" ToolTip="Sumar" HorizontalAlignment="Left" Margin="105,223,0,0" VerticalAlignment="Top" Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.Column="1">
+        <Button Content="+" Name="Add" ToolTip="Sumar" HorizontalAlignment="Left" Margin="119,220,0,0" 
+                VerticalAlignment="Top" Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.Column="1">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="7"/>
@@ -282,7 +306,9 @@
                 <SolidColorBrush Color="CornflowerBlue"/>
             </Button.Background>
         </Button>
-        <Button Content="Off" Name="Off" ToolTip="Este boton cierra la aplicacion" HorizontalAlignment="Left" Margin="59,79,0,0" VerticalAlignment="Top" Width="92" Height="31" FontSize="18" BorderThickness="2" Click="Off_Click_1" Grid.Column="1">
+        <Button Content="Off" Name="Off" ToolTip="Este boton cierra la aplicacion" HorizontalAlignment="Left" 
+                Margin="73,76,0,0" VerticalAlignment="Top" Width="92" Height="31" FontSize="18" BorderThickness="2" 
+                Click="Off_Click_1" Grid.Column="1">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="7"/>
@@ -298,7 +324,9 @@
                 <SolidColorBrush Color="CornflowerBlue"/>
             </Button.Background>
         </Button>
-        <Button Content="Del" Name="Del" ToolTip="Eliminar: Elimina todo el contenido esctito en la calculadora" HorizontalAlignment="Left" Margin="11,79,0,0" VerticalAlignment="Top" Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Del_Click" Grid.ColumnSpan="2">
+        <Button Content="Del" Name="Del" ToolTip="Eliminar: Elimina todo el contenido esctito en la calculadora" 
+                HorizontalAlignment="Left" Margin="22,76,0,0" VerticalAlignment="Top" Width="46" Height="31" 
+                FontSize="18" BorderThickness="2" Click="Del_Click" Grid.ColumnSpan="2">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="7"/>
@@ -314,7 +342,9 @@
                 <SolidColorBrush Color="CornflowerBlue"/>
             </Button.Background>
         </Button>
-        <Button Content="R" Name="R" ToolTip="Retroceso: Elimina el ultimo caracter introducido en la calculadora" HorizontalAlignment="Left" Margin="13,79,0,0" VerticalAlignment="Top" Width="46" Height="31" FontSize="18" BorderThickness="2" Click="R_Click" Grid.Column="1">
+        <Button Content="R" Name="R" ToolTip="Retroceso: Elimina el ultimo caracter introducido en la calculadora" 
+                HorizontalAlignment="Left" Margin="27,76,0,0" VerticalAlignment="Top" Width="46" Height="31" FontSize="18" 
+                BorderThickness="2" Click="R_Click" Grid.Column="1">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="7"/>
@@ -330,7 +360,9 @@
                 <SolidColorBrush Color="CornflowerBlue"/>
             </Button.Background>
         </Button>
-        <Button Content="." Name="Dot" ToolTip="Punto: Convierte el numero que se esta esctibiendo en decimal, escribe el numero natural, pulsa el boton y sigue escribiendo la parte decimal" HorizontalAlignment="Left" Margin="13,223,0,0" VerticalAlignment="Top" Width="46" Height="31" FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.Column="1">
+        <Button Content="." Name="Dot" ToolTip="Punto: Convierte el numero que se esta esctibiendo en decimal, escribe el numero natural, pulsa el boton y sigue escribiendo la parte decimal" 
+                HorizontalAlignment="Left" Margin="27,220,0,0" VerticalAlignment="Top" Width="46" Height="31" 
+                FontSize="18" BorderThickness="2" Click="Button_Click_1" Grid.Column="1">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="7"/>
